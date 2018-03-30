@@ -69,11 +69,12 @@ if (!process.env.token) {
     process.exit(1);
 }
 
-var Botkit = require('../lib/Botkit.js');
+var Botkit = require('Botkit.js');
 var os = require('os');
 
 var controller = Botkit.slackbot({
     debug: true,
+    studio_token: 'x0GnspNDBWBmNCLx7acAAs9v9FucrskpVWgY0lln83WGcZrpsnNGEIw9cKf6eOhp'
 });
 
 var bot = controller.spawn({
@@ -225,6 +226,12 @@ controller.hears(['uptime', 'identify yourself', 'who are you', 'what is your na
              '>. I have been running for ' + uptime + ' on ' + hostname + '.');
 
     });
+
+controller.on('direct_message,direct_mention,mention', function(bot, message) {
+    controller.studio.runTrigger(bot, message.text, message.user, message.channel).catch(function(err) {
+        bot.reply(message, 'I experienced an error with a request to Botkit Studio: ' + err);
+    });
+});
 
 function formatUptime(uptime) {
     var unit = 'second';
