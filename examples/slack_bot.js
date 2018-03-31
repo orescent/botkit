@@ -81,7 +81,7 @@ var bot = controller.spawn({
     token: process.env.token
 }).startRTM();
 
-controller.hears(['hello', 'hi'], 'direct_message,direct_mention,mention', function(bot, message) {
+/*controller.hears(['hello', 'hi'], 'direct_message,direct_mention,mention', function(bot, message) {
 
     bot.api.reactions.add({
         timestamp: message.ts,
@@ -227,6 +227,8 @@ controller.hears(['uptime', 'identify yourself', 'who are you', 'what is your na
 
     });
 
+*/	
+	
 controller.on('direct_message,direct_mention,mention', function(bot, message) {
     controller.studio.runTrigger(bot, message.text, message.user, message.channel).catch(function(err) {
         bot.reply(message, 'I experienced an error with a request to Botkit Studio: ' + err);
